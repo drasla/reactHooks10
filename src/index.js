@@ -1,19 +1,32 @@
 import React, {useState} from 'react';
 import ReactDOM from 'react-dom';
 import "./styles.css";
-import {useInput} from "./useInput";
+import {useTabs} from "./useTabs";
+
+const content = [
+    {
+        tab: "section 1",
+        content: "I'm the content of the Section 1"
+    },
+    {
+        tab: "section 2",
+        content: "I'm the content of the Section 2"
+    },
+    {
+        tab: "section 3",
+        content: "I'm the content of the Section 3"
+    },
+];
 
 const App = () => {
-    const maxLen = (value) => value.length <= 10;
-    const name = useInput("Mr.", maxLen);
+    const {currentItem, changeItem} = useTabs(0, content);
     return (
         <div className="App">
-            <h1>Hello</h1>
-            <input placeholder="Name" {...name}/>
+            {content.map((section, index) => <button onClick={() => changeItem(index)}>{section.tab}</button>)}
+            <div>{currentItem.content}</div>
         </div>
     );
 }
-
 
 const rootElement = document.getElementById("root");
 ReactDOM.render(<App />, rootElement);
