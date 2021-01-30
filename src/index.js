@@ -1,14 +1,16 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import ReactDOM from 'react-dom';
 import "./styles.css";
-import {useTitle} from "./useTitle";
+import {useClick} from "./useClick";
 
 const App = () => {
-    const titleUpdater = useTitle("Loading");
-    setTimeout(() => titleUpdater("Home"), 5000);
+    const sayHello = () => {
+        console.log("say hello");
+    };
+    const title = useClick(sayHello);
     return (
         <div className="App">
-            <div>Hi</div>
+            <h1 ref={title}>Hi</h1>
         </div>
     );
 }
