@@ -1,19 +1,18 @@
 import React, {useState, useEffect, useRef} from 'react';
 import ReactDOM from 'react-dom';
 import "./styles.css";
-import {useClick} from "./useClick";
+import {usePreventLeave} from "./usePreventLeave";
 
 const App = () => {
-    const sayHello = () => {
-        console.log("say hello");
-    };
-    const title = useClick(sayHello);
+    const {enablePrevent, disablePrevent} = usePreventLeave();
     return (
         <div className="App">
-            <h1 ref={title}>Hi</h1>
+            <button onclick={enablePrevent}>Protect</button>
+            <button onclick={disablePrevent}>Unprotect</button>
         </div>
     );
 }
 
 const rootElement = document.getElementById("root");
 ReactDOM.render(<App />, rootElement);
+
