@@ -6,6 +6,7 @@ import {useGeolocation} from "./useGeolocation";
 import {useKeyPress} from "./useKeyPress";
 import styled from "styled-components"
 import {useLocalStorage} from "./useLocalStorage";
+import {useMousePosition} from "./useMousePosition";
 
 const H2 = styled.h2`
   margin-top: 40px;
@@ -20,6 +21,7 @@ const App = () => {
     const cPressed = useKeyPress("c");
     const hPressed = useKeyPress("h");
     const [currentLS, setLS] = useLocalStorage("storage", "12345");
+    const { x, y } = useMousePosition();
 
     return (
         <div className="App">
@@ -52,6 +54,11 @@ const App = () => {
                 <li>Current Value: {currentLS}</li>
                 <button onClick={() => setLS("12345")}>Set value: 12345</button>
                 <button onClick={() => setLS(null)}>Clear LS</button>
+            </ul>
+            <H2>useMousePosition</H2>
+            <ul>
+                <li>Mouse X : {x}</li>
+                <li>Mouse Y : {y}</li>
             </ul>
         </div>
     );
