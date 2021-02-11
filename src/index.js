@@ -1,21 +1,24 @@
 import React, {useState, useEffect, useRef} from 'react';
 import ReactDOM from 'react-dom';
 import "./styles.css";
-import {useFadeIn} from "./useFadeIn";
-import {useNetwork} from "./useNetwork";
+import {useScroll} from "./useScroll";
+import {useFullscreen} from "./useFullscreen";
 
 const App = () => {
-    const handleNetworkChange = (online) => {
-        console.log(online ? "We just went online" : "We are offline");
+    const {y} = useScroll();
+    const onFullS = isFull => {
+        console.log(isFull ? "We are full" : "We are small");
     }
-    const onLine = useNetwork(handleNetworkChange);
-    const fadeInH1 = useFadeIn(2, 2);
-    const fadeInP = useFadeIn(5, 5);
+    const {element, triggerFull, exitFull} = useFullscreen(onFullS);
+
     return (
-        <div className="App">
-            <h1 {...fadeInH1}>Hello</h1>
-            <p {...fadeInP}>lorem ipsum</p>
-            <h1>{onLine ? "Online" : "Offline"}</h1>
+        <div className="App" style={{ height: "1000vh" }}>
+            <h1 style={{ position: "fixed", color: y > 100 ? "red" : "blue"}}>Hi</h1>
+            <div ref={element}>
+                <img alt="" src="https://s.pstatic.net/static/www/mobile/edit/2021/0209/cropImg_728x360_54798928890668437.jpeg" />
+                <button onClick={exitFull}>Exit fullscreen</button>
+            </div>
+            <button onClick={triggerFull}>Make fullscreen</button>
         </div>
     );
 }
