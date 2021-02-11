@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import "./styles.css";
 import {useDeviceOrientation} from "./useDeviceOrientation";
 import {useGeolocation} from "./useGeolocation";
+import {useKeyPress} from "./useKeyPress";
 import styled from "styled-components"
 
 const H2 = styled.h2`
@@ -11,11 +12,14 @@ const H2 = styled.h2`
 
 
 
-
-
 const App = () => {
     const {alpha, beta, gamma} = useDeviceOrientation();
     const {state: {latitude: lat, longitude: long}, error} = useGeolocation();
+    const kPressed = useKeyPress("k");
+    const iPressed = useKeyPress("i");
+    const mPressed = useKeyPress("m");
+    const cPressed = useKeyPress("c");
+    const hPressed = useKeyPress("h");
     return (
         <div className="App">
             <h1>Superhooks!</h1>
@@ -32,6 +36,15 @@ const App = () => {
                 <li>Latitude : {lat ? lat : "null"}</li>
                 <li>Longitude: {long ? long : "null"}</li>
                 <li>Geolocation Error: {error ? error : "null"}</li>
+            </ul>
+            <H2>useKeyPress</H2>
+            <ul>
+                <li>Pressed 'k': {kPressed && "K"}</li>
+                <li>Pressed 'i': {iPressed && "I"}</li>
+                <li>Pressed 'm': {mPressed && "M"}</li>
+                <li>Pressed 'c': {cPressed && "C"}</li>
+                <li>Pressed 'h': {hPressed && "H"}</li>
+                <li>Pressed 'i': {iPressed && "I"}</li>
             </ul>
         </div>
     );
