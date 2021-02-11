@@ -1,16 +1,20 @@
 import React, {useState, useEffect, useRef} from 'react';
 import ReactDOM from 'react-dom';
 import "./styles.css";
-import useAxios from "./useAxios";
+import {useDeviceOrientation} from "./useDeviceOrientation";
 
 const App = () => {
-    const {loading, error, data, refetch} = useAxios({url: "https://api.coinpaprika.com/v1/coins"});
-    console.log(`${loading} , ${error} , ${JSON.stringify(data)}`)
+    const useDevice = useDeviceOrientation();
     return (
         <div className="App">
-            <h1>{data && data.status}</h1>
-            <h2>{loading && "Loading"}</h2>
-            <button onClick={refetch}>Refetch</button>
+            <h1>Superhooks!</h1>
+            <h2>useDeviceOrientation</h2>
+            <ul>
+                <li>Alpha : {useDevice.alpha ? useDevice.alpha : "null"}</li>
+                <li>Beta : {useDevice.beta ? useDevice.beta : "null"}</li>
+                <li>Gamma : {useDevice.gamma ? useDevice.gamma : "null"}</li>
+            </ul>
+            <h2>useFavicon</h2>
         </div>
     );
 }
