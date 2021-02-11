@@ -2,9 +2,11 @@ import React, {useState, useEffect, useRef} from 'react';
 import ReactDOM from 'react-dom';
 import "./styles.css";
 import {useDeviceOrientation} from "./useDeviceOrientation";
+import {useFavicon} from "./useFavicon";
 
 const App = () => {
     const useDevice = useDeviceOrientation();
+    const useFavi = useFavicon();
     return (
         <div className="App">
             <h1>Superhooks!</h1>
@@ -15,6 +17,7 @@ const App = () => {
                 <li>Gamma : {useDevice.gamma ? useDevice.gamma : "null"}</li>
             </ul>
             <h2>useFavicon</h2>
+            <button onClick={useFavi.change}>Change Favicon</button>
         </div>
     );
 }
