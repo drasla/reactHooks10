@@ -7,6 +7,7 @@ import {useKeyPress} from "./useKeyPress";
 import styled from "styled-components"
 import {useLocalStorage} from "./useLocalStorage";
 import {useMousePosition} from "./useMousePosition";
+import {useOnline} from "./useOnline";
 
 const H2 = styled.h2`
   margin-top: 40px;
@@ -22,6 +23,7 @@ const App = () => {
     const hPressed = useKeyPress("h");
     const [currentLS, setLS] = useLocalStorage("storage", "12345");
     const { x, y } = useMousePosition();
+    const isOnLine = useOnline();
 
     return (
         <div className="App">
@@ -60,6 +62,8 @@ const App = () => {
                 <li>Mouse X : {x}</li>
                 <li>Mouse Y : {y}</li>
             </ul>
+            <H2>useOnline</H2>
+            <div>Are we online? {isOnLine ? "Yes" : "No"}</div>
         </div>
     );
 }
