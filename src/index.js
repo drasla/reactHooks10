@@ -8,13 +8,31 @@ import styled from "styled-components"
 import {useLocalStorage} from "./useLocalStorage";
 import {useMousePosition} from "./useMousePosition";
 import {useOnline} from "./useOnline";
+import {useFavicon} from "./useFavicon";
 
 const H2 = styled.h2`
   margin-top: 40px;
 `;
 
+const useLockScroll = () => {
+    const [isLocked, setIsLocked] = useState(false);
+
+    const lockScroll = () => {
+        setIsLocked(true);
+        document.body.style.overflow = "hidden";
+    };
+    const unlockScroll = () => {
+        setIsLocked(false);
+        document.body.style.overflow = "scroll";
+    };
+
+    return [isLocked, { lockScroll, unlockScroll }];
+};
+
 const App = () => {
     const {alpha, beta, gamma} = useDeviceOrientation();
+    const setFavicon = useFavicon("https://nomadcoders.co/m.png");
+    const faviconChange = () => { setFavicon("https://www.google.com/favicon.ico"); };
     const {state: {latitude: lat, longitude: long}, error} = useGeolocation();
     const kPressed = useKeyPress("k");
     const iPressed = useKeyPress("i");
@@ -24,6 +42,7 @@ const App = () => {
     const [currentLS, setLS] = useLocalStorage("storage", "12345");
     const { x, y } = useMousePosition();
     const isOnLine = useOnline();
+    const [isLocked, { lockScroll, unlockScroll }] = useLockScroll();
 
     return (
         <div className="App">
@@ -35,7 +54,7 @@ const App = () => {
                 <li>Gamma : {gamma ? gamma : "null"}</li>
             </ul>
             <H2>useFavicon</H2>
-            <button>Change Favicon</button>
+            <button onClick={faviconChange}>Change Favicon</button>
             <H2>useGeolocation</H2>
             <ul>
                 <li>Latitude : {lat ? lat : "null"}</li>
@@ -64,6 +83,10 @@ const App = () => {
             </ul>
             <H2>useOnline</H2>
             <div>Are we online? {isOnLine ? "Yes" : "No"}</div>
+            <H2>useLockScroll</H2>
+            <h3>Is Locked? {isLocked ? "Yes" : "No"}</h3>
+            <button onClick={lockScroll}>lock scroll</button>
+            <button onClick={unlockScroll}>unlock scroll</button>
         </div>
     );
 }
