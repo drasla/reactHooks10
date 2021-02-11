@@ -5,12 +5,11 @@ import {useDeviceOrientation} from "./useDeviceOrientation";
 import {useGeolocation} from "./useGeolocation";
 import {useKeyPress} from "./useKeyPress";
 import styled from "styled-components"
+import {useLocalStorage} from "./useLocalStorage";
 
 const H2 = styled.h2`
   margin-top: 40px;
 `;
-
-
 
 const App = () => {
     const {alpha, beta, gamma} = useDeviceOrientation();
@@ -20,6 +19,8 @@ const App = () => {
     const mPressed = useKeyPress("m");
     const cPressed = useKeyPress("c");
     const hPressed = useKeyPress("h");
+    const [currentLS, setLS] = useLocalStorage("storage", "12345");
+
     return (
         <div className="App">
             <h1>Superhooks!</h1>
@@ -45,6 +46,12 @@ const App = () => {
                 <li>Pressed 'c': {cPressed && "C"}</li>
                 <li>Pressed 'h': {hPressed && "H"}</li>
                 <li>Pressed 'i': {iPressed && "I"}</li>
+            </ul>
+            <H2>useLocalStorage</H2>
+            <ul>
+                <li>Current Value: {currentLS}</li>
+                <button onClick={() => setLS("12345")}>Set value: 12345</button>
+                <button onClick={() => setLS(null)}>Clear LS</button>
             </ul>
         </div>
     );
